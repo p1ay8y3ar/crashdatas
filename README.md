@@ -1,2 +1,1 @@
-# crashdatas
-some fuzz crash datas
+test  pdfcrack <=18.0
