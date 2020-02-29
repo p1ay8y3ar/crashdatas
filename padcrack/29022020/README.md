@@ -1,1 +1,1 @@
-test  pdfcrack <=18.0
+test  pdfcrack <=0.18
