@@ -1,0 +1,63 @@
+./magick convert o/crashes/id\:000000\,sig\:06\,src\:000000\,op\:flip1\,pos\:191020 11.png
+=================================================================
+==74648==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7f62ea369962 at pc 0x000001389ad0 bp 0x7ffc161d7be0 sp 0x7ffc161d7bd8
+READ of size 1 at 0x7f62ea369962 thread T0
+    #0 0x1389acf in PushCharPixel /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/./MagickCore/quantum-private.h:236:11
+    #1 0x1389acf in ImportRGBQuantum /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickCore/quantum-import.c:3797:11
+    #2 0x1389acf in ImportQuantumPixels /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickCore/quantum-import.c:4776:7
+    #3 0xd1eb2d in ReadTIFFImage /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/coders/tiff.c:1970:20
+    #4 0xe84e2d in ReadImage /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickCore/constitute.c:553:15
+    #5 0xe89948 in ReadImages /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickCore/constitute.c:941:9
+    #6 0x1731cb8 in ConvertImageCommand /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickWand/convert.c:606:18
+    #7 0x1897ac3 in MagickCommandGenesis /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickWand/mogrify.c:186:14
+    #8 0x4cf918 in MagickMain /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/utilities/magick.c:149:10
+    #9 0x4cf918 in main /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/utilities/magick.c:180:10
+    #10 0x7f62f00671e2 in __libc_start_main /build/glibc-t7JzpG/glibc-2.30/csu/../csu/libc-start.c:308:16
+    #11 0x4279ed in _start (/home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/utilities/magick+0x4279ed)
+
+0x7f62ea369962 is located 0 bytes to the right of 225634-byte region [0x7f62ea332800,0x7f62ea369962)
+allocated by thread T0 here:
+    #0 0x49f8ed in malloc (/home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/utilities/magick+0x49f8ed)
+    #1 0xd1e7ac in ReadTIFFImage /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/coders/tiff.c:1922:40
+    #2 0xe84e2d in ReadImage /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickCore/constitute.c:553:15
+    #3 0xe89948 in ReadImages /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickCore/constitute.c:941:9
+    #4 0x1731cb8 in ConvertImageCommand /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickWand/convert.c:606:18
+    #5 0x1897ac3 in MagickCommandGenesis /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/MagickWand/mogrify.c:186:14
+    #6 0x4cf918 in MagickMain /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/utilities/magick.c:149:10
+    #7 0x4cf918 in main /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/utilities/magick.c:180:10
+    #8 0x7f62f00671e2 in __libc_start_main /build/glibc-t7JzpG/glibc-2.30/csu/../csu/libc-start.c:308:16
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /home/freedom/Desktop/fuzz_sourcecode/imageMagick/test/ImageMagick-7.0.9-27/./MagickCore/quantum-private.h:236:11 in PushCharPixel
+Shadow bytes around the buggy address:
+  0x0fecdd4652d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fecdd4652e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fecdd4652f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fecdd465300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0fecdd465310: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0fecdd465320: 00 00 00 00 00 00 00 00 00 00 00 00[02]fa fa fa
+  0x0fecdd465330: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fecdd465340: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fecdd465350: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fecdd465360: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0fecdd465370: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==74648==ABORTING
